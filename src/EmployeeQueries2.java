@@ -5,7 +5,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 
-public class EmployeeQueries {
+public class EmployeeQueries2 {
     private static List<Employee> createEmployees() {
         List<Employee> employeeList = new ArrayList<Employee>();
 
