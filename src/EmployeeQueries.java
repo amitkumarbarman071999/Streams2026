@@ -30,8 +30,8 @@ public class EmployeeQueries {
         return employeeList;
     }
 
-    private static void maleAndFemale(List<Employee> employeeList) {
-        System.out.println("1----Male&Female employees: Count only----");
+    private static void summarizeEmployeesByGender(List<Employee> employeeList) {
+        System.out.println("01) Split the workforce by gender and show a quick count/list summary");
         Map<String, Long> map = employeeList.stream()
                 .collect(Collectors.groupingBy(o -> o.gender(), Collectors.counting()));
         for (Map.Entry<String, Long> entry : map.entrySet()) {
@@ -40,7 +40,7 @@ public class EmployeeQueries {
 //       prints:
 //       Male: 12
 //       Female: 6
-        System.out.println("1----Male&Female employees: separate List----");
+        System.out.println("Split the workforce by gender and show a quick count/list summary");
 
         Map<String, List<Employee>> Collect = employeeList.stream()
                 .collect(Collectors.groupingBy(Employee::gender));
@@ -53,8 +53,8 @@ public class EmployeeQueries {
 
     }
 
-    private static void departmentNames(List<Employee> employees) {
-        System.out.println("2. Print the name of all the dept in organization");
+    private static void printAllDepartmentNames(List<Employee> employees) {
+        System.out.println("Print all unique department names available in the organization (no duplicates)");
 
         List<String> departments = employees.stream()
                 .map(Employee::department).distinct().collect(Collectors.toList());
@@ -70,9 +70,9 @@ public class EmployeeQueries {
 
     }
 
-    private static void avarageAgeOfMaleFemale(List<Employee> employees) {
+    private static void calculateAverageAgeByGender(List<Employee> employees) {
 
-        System.out.println("3. What is the average age of male and female employees");
+        System.out.println("3.Compute the average age separately for males and females (gender-wise age analytics)");
         Map<String, Double> map = employees.stream().collect(Collectors.groupingBy(Employee::gender, Collectors.averagingDouble(o -> o.age())));
 
         //employees.stream().collect(Collectors.groupingBy(Employee::gender) -> means we have a map with 2 entries ,
@@ -85,7 +85,7 @@ public class EmployeeQueries {
 //        prints:
 //        Male : 30
 //        Female : 27
-        System.out.println("3. What is the average age of male and female employees but less concise");
+        System.out.println("3. Compute the average age separately for males and females (gender-wise age analytics) but less concise");
         Map<String, List<Employee>> groupByGender = employees.stream().collect(Collectors.groupingBy(Employee::gender));
 
         for (Map.Entry<String, List<Employee>> group : groupByGender.entrySet()) {
@@ -98,8 +98,8 @@ public class EmployeeQueries {
 
     }
 
-    private static void highestPaid(List<Employee> employeeList) {
-        System.out.println("4. Get the details of highest paid employee in the organization");
+    private static void printHighestPaidEmployee(List<Employee> employeeList) {
+        System.out.println("4. Identify the highest-paid employee in the entire company and print full details");
 
         Employee employee = employeeList.stream().max(Comparator.comparing(o -> o.salary())).orElse(null);
         //employeeList.stream().max() -> looking of single top employee
@@ -110,12 +110,12 @@ public class EmployeeQueries {
 //        prints:
 //        Employee[id=277, name=Anuj Chettiar, age=31, gender=Male, department=Product Development, yearOfJoining=2012, salary=35700.0]
 
-        System.out.println("4. Get the details of highest paid employee in the organization , different way");
+        System.out.println("4. Identify the highest-paid employee in the entire company and print full details , different way");
         Optional<Employee> highestPaid = employeeList.stream().max(Comparator.comparing(Employee::salary));
 
         highestPaid.ifPresentOrElse(System.out::println, () -> System.out.println("Highest paid doesn't exist"));
 
-        System.out.println("4. Get the details of highest paid employee in the organization , " +
+        System.out.println("4. Identify the highest-paid employee in the entire company and print full details , " +
                 "Now multiple employees can have same salary , pick lexicographically smaller name");
 
         Employee employeeSmallerName = employeeList.stream()
@@ -133,7 +133,7 @@ public class EmployeeQueries {
 //        prints:
 //        Employee[id=276, name=Aaa kumar, age=31, gender=Male, department=Product Development, yearOfJoining=2012, salary=35700.0]
 
-        System.out.println("4. Get the details of highest paid employee in the organization , " +
+        System.out.println("4. Identify the highest-paid employee in the entire company and print full details, " +
                 "Now multiple employees can have same salary , pick lexicographically smaller name , but using 'MIN");
         Employee employeeSmallerName2 = employeeList.stream()
                 .min(
@@ -146,8 +146,8 @@ public class EmployeeQueries {
     }
 
 
-    private static void joinedAfter2015(List<Employee> employees) {
-        System.out.println("5. Get names of all employees who have joined after 2015");
+    private static void listEmployeesJoinedAfterYear(List<Employee> employees) {
+        System.out.println("5. List employees who joined after the year 2015 (use joiningYear filter > 2015)");
 
         List<String> employeeNames = employees.stream().filter(o -> o.yearOfJoining() > 2015).map(Employee::name).toList();//java17+, immutable list
         List<String> employeeNames1 = employees.stream().filter(o -> o.yearOfJoining() > 2015).map(Employee::name).collect(Collectors.toList());//java8+ , mutable list
@@ -160,9 +160,9 @@ public class EmployeeQueries {
 //        Amelia Zoe, Nitin Joshi, Nicolus Den, Ali Baig
     }
 
-    private static void noOfEmployeesInEachDept(List<Employee> employees) {
+    private static void  countEmployeesByDepartment(List<Employee> employees) {
 
-        System.out.println("6. Count the number of employees in each dept");
+        System.out.println("6. Count how many employees work in each department (department -> headcount)");
 
         Map<String, Long> employeesInDepartmentMap = employees.stream().collect(Collectors.groupingBy(Employee::department, Collectors.counting()));
 
@@ -174,7 +174,7 @@ public class EmployeeQueries {
             System.out.println(k + " : " + v.intValue());
         });
 
-        System.out.println("6. Count the number of employees in each dept , more concise");
+        System.out.println("6. Count how many employees work in each department (department -> headcount) , more concise");
         employees.stream().collect(Collectors.groupingBy(Employee::department, Collectors.counting())).forEach((k, v) -> {
             System.out.println(k + " : " + v.intValue());
         });
@@ -187,8 +187,8 @@ public class EmployeeQueries {
 //        Account And Finance : 2
     }
 
-    private static void avgSalaryOfEachDept(List<Employee> employees) {
-        System.out.println("7. What is the average salary of each department?");
+    private static void calculateAverageSalaryByDepartment(List<Employee> employees) {
+        System.out.println("7.  Calculate department-wise average salary (department -> avg salary)?");
 
         Map<String, Double> deptWiseSalary = employees.stream()
                 .collect(Collectors.groupingBy(Employee::department, Collectors.averagingDouble(Employee::salary)));
@@ -208,8 +208,8 @@ public class EmployeeQueries {
 //        Account And Finance : 24150.00
     }
 
-    private static void youngestInProdDevDept(List<Employee> employees) {
-        System.out.println("8. Details of the youngest male employee in the product development department");
+    private static void printYoungestMaleInProductDevelopment(List<Employee> employees) {
+        System.out.println("8. From Product Development, find the youngest male employee and display the profile");
         employees.stream()
                 .filter(o -> o.gender().equalsIgnoreCase("male") && o.department().equalsIgnoreCase("Product Development"))
                 .min(Comparator.comparing(Employee::age))
@@ -224,8 +224,8 @@ public class EmployeeQueries {
 
     }
 
-    public static void mostWorkingExperience(List<Employee> employees) {
-        System.out.println("9. Who has the most working experience in the organization");
+    private static void printMostExperiencedEmployee(List<Employee> employees) {
+        System.out.println("9. Find the most experienced employee (earliest joining year / max years of service)");
 
         employees.stream()
                 .min(Comparator.comparing(Employee::yearOfJoining))
@@ -233,7 +233,7 @@ public class EmployeeQueries {
 
 //        prints:
 //        Employee[id=177, name=Iqbal Hussain, age=43, gender=Male, department=Security And Transport, yearOfJoining=2010, salary=10500.0]
-        System.out.println("9. Who has the most working experience in the organization , if multiple then select with lower id");
+        System.out.println("9. Find the most experienced employee (earliest joining year / max years of service) , if multiple then select with lower id");
         employees.stream()
                 .min(Comparator.comparing(Employee::yearOfJoining).thenComparing(Employee::id))
                 .ifPresentOrElse(System.out::println, () -> System.out.println("No employee exist"));
@@ -244,8 +244,8 @@ public class EmployeeQueries {
 
     }
 
-    public static void maleFamaleCountInSalesTeam(List<Employee> employees) {
-        System.out.println("10. How many male and female employees are there in the sales and marketing team");
+    private static void countGenderInSalesAndMarketing(List<Employee> employees) {
+        System.out.println("10.In Sales & Marketing, count male vs female employees (team-wise gender distribution)");
         employees.stream()
                 .filter(o -> o.department().equalsIgnoreCase("Sales And Marketing"))
                 .collect(Collectors.groupingBy(Employee::gender, Collectors.counting()))
@@ -260,8 +260,8 @@ public class EmployeeQueries {
 
     }
 
-    public static void avgSalaryOfMaleFemale(List<Employee> employees) {
-        System.out.println("11. What is the avg salary of male and female employees?");
+    private static void calculateAverageSalaryByGender(List<Employee> employees) {
+        System.out.println("11. Compute average salary for males and females separately (gender-wise pay comparison)");
         employees.stream()
                 .collect(Collectors.groupingBy(Employee::gender, Collectors.averagingDouble(Employee::salary)))
                 .forEach((k, v) -> {
@@ -274,8 +274,8 @@ public class EmployeeQueries {
 
     }
 
-    public static void namesOfEmployeesInEachDept(List<Employee> employees) {
-        System.out.println("12.List down the names of all employees in each department");
+    private static void printEmployeeNamesGroupedByDepartment(List<Employee> employees) {
+        System.out.println("12.Print department-wise employee names (department -> list of names)");
         employees.stream()
                 .collect(Collectors.groupingBy(Employee::department, Collectors.mapping(Employee::name, Collectors.toList())))
                 .forEach((k, v) -> {
@@ -299,8 +299,8 @@ public class EmployeeQueries {
 
     }
 
-    private static void avgAndTotalSalaryAndStats(List<Employee> employees) {
-        System.out.println("13. What is the average salary and total salary of the whole organization?");
+    private static void printOrganizationSalaryStatistics(List<Employee> employees) {
+        System.out.println("13. Compute organization-wide salary stats: average salary + total payout + optional summary");
         DecimalFormat df = new DecimalFormat("0.00");
         double average = employees.stream()
                 .mapToDouble(Employee::salary)
@@ -319,7 +319,7 @@ public class EmployeeQueries {
 //        prints:
 //        395101.00
 
-        System.out.println("13. What is the average salary and total salary of the whole organization? , other way");
+        System.out.println("13. Compute organization-wide salary stats: average salary + total payout + optional summary , other way");
         DoubleSummaryStatistics stats = employees.stream()
                 .collect(Collectors.summarizingDouble(Employee::salary));
 
@@ -340,8 +340,8 @@ public class EmployeeQueries {
 
     }
 
-    private static void partitionYoungAndOld(List<Employee> employees) {
-        System.out.println("14. Separate the employees who are younger or equal to 25 years from those employees who are older than 25 years.");
+    private static void partitionEmployeesByAgeThreshold(List<Employee> employees) {
+        System.out.println("14.Partition employees into two groups: age <= 25 and age > 25 (two buckets)");
         Map<Boolean, List<Employee>> collect = employees.stream()
                 .collect(Collectors.partitioningBy(o -> o.age() <= 25));
 
@@ -356,8 +356,8 @@ public class EmployeeQueries {
 //        Paul Niksui, Amelia Zoe, Nitin Joshi, Nicolus Den, Ali Baig
     }
 
-    private static void oldestEmployee(List<Employee> employees) {
-        System.out.println("15. Who is the oldest employee in the organization? What is his age and which department he belongs to?");
+    private static void printOldestEmployeeDetails(List<Employee> employees) {
+        System.out.println("15. Find the oldest employee and print: name, age, and department details");
 
         employees.stream()
                 .max(Comparator.comparing(Employee::age))
@@ -371,9 +371,8 @@ public class EmployeeQueries {
 //        Department: Security And Transport
     }
 
-    private static void  duplicateEmployees(List<Employee> employeeList)
-    {
-        System.out.println("16. Find Duplicate Employees in list");
+    private static void findAndPrintDuplicateEmployees(List<Employee> employeeList) {
+        System.out.println("16. Detect duplicate employees in the list (based on a unique key like id/email)");
         Set<Integer> seen = new HashSet<>();
 
         List<Employee> duplicates =
@@ -385,10 +384,10 @@ public class EmployeeQueries {
         // Note : equals() and hashcode() methods are implemented in your class
 
     }
-    private static void duplicateElements()
-    {
-        System.out.println("17. Find Duplicate elements in list");
-        List<Integer> numbers = Arrays.asList(1,2,2,3,4,5,2,3,3,6,7,1);
+
+    private static void findDuplicateElementsInList() {
+        System.out.println("17. FDetect duplicate elements in a generic List (wrapper-class example: Integer/String, etc.)");
+        List<Integer> numbers = Arrays.asList(1, 2, 2, 3, 4, 5, 2, 3, 3, 6, 7, 1);
         Set<Integer> seen = new HashSet<>();
 
         Set<Integer> duplicates = numbers.stream()
@@ -406,9 +405,9 @@ public class EmployeeQueries {
 //        123
 
     }
-    private static void firstNonRepeating()
-    {
-        System.out.println( "18. Find First Non-Repeating Character in a String");
+
+    private static void printFirstNonRepeatingCharacter() {
+        System.out.println("18.Find the first non-repeating character in a given string (primitive stream style)");
         String str = "java interview";
 
         Character result = str.chars()
@@ -442,61 +441,59 @@ public class EmployeeQueries {
     public static void main(String[] args) {
         List<Employee> employees = createEmployees();
 
-        // 1. Male and Female employees
-        maleAndFemale(employees);
+    // 01) Split the workforce by gender and show a quick count/list summary
+            summarizeEmployeesByGender(employees);
 
-        //2. Print the name of all the dept in organization
-        departmentNames(employees);
+    // 02) Print all unique department names available in the organization (no duplicates)
+            printAllDepartmentNames(employees);
 
-        //3. What is the average age of male and female employees
-        avarageAgeOfMaleFemale(employees);
+    // 03) Compute the average age separately for males and females (gender-wise age analytics)
+            calculateAverageAgeByGender(employees);
 
-        //4. Get the details of highest paid employee in the organization
-        highestPaid(employees);
+    // 04) Identify the highest-paid employee in the entire company and print full details
+            printHighestPaidEmployee(employees);
 
-        //5. Get names of all employees who have joined after 2015
-        joinedAfter2015(employees);
+    // 05) List employees who joined after the year 2015 (use joiningYear filter > 2015)
+            listEmployeesJoinedAfterYear(employees);
 
-        //6. Count the number of employees in each dept
-        noOfEmployeesInEachDept(employees);
+    // 06) Count how many employees work in each department (department -> headcount)
+            countEmployeesByDepartment(employees);
 
-        //7. What is the average salary of each department?
-        avgSalaryOfEachDept(employees);
+    // 07) Calculate department-wise average salary (department -> avg salary)
+            calculateAverageSalaryByDepartment(employees);
 
-        //8. Details of the youngest male employee in the product development department
-        youngestInProdDevDept(employees);
+    // 08) From Product Development, find the youngest male employee and display the profile
+            printYoungestMaleInProductDevelopment(employees);
 
-        //9. Who has the most working experience in the organization
-        mostWorkingExperience(employees);
+    // 09) Find the most experienced employee (earliest joining year / max years of service)
+            printMostExperiencedEmployee(employees);
 
-        //10. How many male and female employees are there in the sales and marketing team
-        maleFamaleCountInSalesTeam(employees);
+    // 10) In Sales & Marketing, count male vs female employees (team-wise gender distribution)
+            countGenderInSalesAndMarketing(employees);
 
-        //11. What is the avg salary of male and female employees?
-        avgSalaryOfMaleFemale(employees);
+    // 11) Compute average salary for males and females separately (gender-wise pay comparison)
+            calculateAverageSalaryByGender(employees);
 
-        //12. List down the names of all employees in each department
-        namesOfEmployeesInEachDept(employees);
+    // 12) Print department-wise employee names (department -> list of names)
+            printEmployeeNamesGroupedByDepartment(employees);
 
-        //13. What is the average salary and total salary of the whole organization?
-        avgAndTotalSalaryAndStats(employees);
+    // 13) Compute organization-wide salary stats: average salary + total payout + optional summary
+            printOrganizationSalaryStatistics(employees);
 
-        //14. Separate the employees who are younger or equal to 25 years from those employees who are older than 25 years.
-        partitionYoungAndOld(employees);
+    // 14) Partition employees into two groups: age <= 25 and age > 25 (two buckets)
+            partitionEmployeesByAgeThreshold(employees);
 
-        //15. Who is the oldest employee in the organization? What is his age and which department he belongs to?
-        oldestEmployee(employees);
+    // 15) Find the oldest employee and print: name, age, and department details
+            printOldestEmployeeDetails(employees);
 
-        //16. Find Duplicate Employees in Employee List
-        duplicateEmployees(employees);
+    // 16) Detect duplicate employees in the list (based on a unique key like id/email)
+            findAndPrintDuplicateEmployees(employees);
 
-        //17. Find Duplicate Elements in a List
-        // wrapper class question
-        duplicateElements();
+    // 17) Detect duplicate elements in a generic List (wrapper-class example: Integer/String, etc.)
+            findDuplicateElementsInList();
 
-        //18. Find First Non-Repeating Character in a String
-        // primitive stream question
-        firstNonRepeating();
+    // 18) Find the first non-repeating character in a given string (primitive stream style)
+            printFirstNonRepeatingCharacter();
     }
 
 }
