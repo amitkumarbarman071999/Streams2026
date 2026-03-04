@@ -1,58 +1,51 @@
-Java  Streams  Interview Questions:
-       
-        
-        // 1. Male and Female employees
-        maleAndFemale(employees);
-        
-        //2. Print the name of all the dept in organization
-        departmentNames(employees);
+🚀 **Preparing for Java Interviews? Don’t Ignore Java Streams.**
 
-        //3. What is the average age of male and female employees
-        avarageAgeOfMaleFemale(employees);
+If you're targeting Java Developer / SDE roles, one thing is clear:
 
-        //4. Get the details of highest paid employee in the organization
-        highestPaid(employees);
+👉 **Java Streams is NOT optional anymore.**
 
-        //5. Get names of all employees who have joined after 2015
-        joinedAfter2015(employees);
+It’s one of the most frequently asked topics in backend interviews — and not just basics. Interviewers go deep with follow-ups.
 
-        //6. Count the number of employees in each dept
-        noOfEmployeesInEachDept(employees);
+So I compiled a **curated list of Java Stream interview questions with multiple approaches, detailed answers, comments, and follow-up discussions** — exactly the way interviewers expect you to think and explain.
 
-        //7. What is the average salary of each department?
-        avgSalaryOfEachDept(employees);
+---
 
-        //8. Details of the youngest male employee in the product development department
-        youngestInProdDevDept(employees);
+Here are some real interview-style questions covered:
 
-        //9. Who has the most working experience in the organization
-        mostWorkingExperience(employees);
+1. Split the workforce by gender and show a count/list summary
+2. Print all unique department names (no duplicates)
+3. Compute average age separately for males and females
+4. Identify the highest-paid employee and print full details
+5. List employees who joined after 2015
+6. Count employees in each department
+7. Calculate department-wise average salary
+8. From Product Development, find the youngest male employee
+9. Find the most experienced employee
+10. In Sales & Marketing, count male vs female employees
+11. Compute average salary for males and females separately
+12. Print department-wise employee names
+13. Compute organization-wide salary stats (average + total payout)
+14. Partition employees into two groups: age <= 25 and age > 25
+15. Find the oldest employee with name, age, and department
+16. Detect duplicate employees (based on id/email)
+17. Detect duplicate elements in a generic List
+18. Find the first non-repeating character in a given string
 
-        //10. How many male and female employees are there in the sales and marketing team
-        maleFamaleCountInSalesTeam(employees);
+---
 
-        //11. What is the avg salary of male and female employees?
-        avgSalaryOfMaleFemale(employees);
+📚 Streams Foundation Topics:
 
-        //12. List down the names of all employees in each department
-        namesOfEmployeesInEachDept(employees);
+✔ 3-step Stream approach
+	1️⃣ Convert source to Stream
+	2️⃣ Apply Intermediate Operations (filter, map, sorted, etc.)
+	3️⃣ Apply Terminal Operations (collect, count, reduce, etc.)
 
-        //13. What is the average salary and total salary of the whole organization?
-        avgAndTotalSalaryAndStats(employees);
+✔ Functional Interfaces – Predicate, Function, Consumer, Supplier
+✔ BiFunction, BiPredicate, BiConsumer
+✔ Lambda Expressions
+✔ Method & Constructor References
+✔ Stream Creation techniques
+✔ Collect & Collectors
+✔ Comparator.comparing()
 
-        //14. Separate the employees who are younger or equal to 25 years from those employees who are older than 25 years.
-        partitionYoungAndOld(employees);
-
-        //15. Who is the oldest employee in the organization? What is his age and which department he belongs to?
-        oldestEmployee(employees);
-
-        //16. Find Duplicate Employees in Employee List
-        duplicateEmployees(employees);
-
-        //17. Find Duplicate Elements in a List
-        // wrapper class question
-        duplicateElements();
-
-        //18. Find First Non-Repeating Character in a String
-        // primitive stream question
-        firstNonRepeating();
+---
